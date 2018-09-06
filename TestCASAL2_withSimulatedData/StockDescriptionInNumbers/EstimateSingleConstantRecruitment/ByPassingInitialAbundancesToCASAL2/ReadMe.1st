@@ -1,0 +1,17 @@
+# CREATED  22 May 2018
+# MODIFIED  3 August 2018
+
+# Background
+As of 3 Aug. 2018, CASAL2 allows to build models where catch from fishing are removed instantaneously (referred to as pulse fishing). Hence, data were simulated using the same assumption.
+
+# Simulation
+Number of individual at age in a population were simulated assuming a constant recruitment. Each year in the simulation was divided into 3 intervals: during the first and third interval, number at age decline due to natural mortality (M over each year and M/2 during each interval); and during the second interval, fishing removes a given number of individuals.
+
+# Creation of simulated data and CASAL2 files
+source("SimulationStudy.R")
+
+# run of CASAL2 at the shell prompt
+casal2_adolc -r
+
+# Use CASAL2 to estimate recruitment
+casal2_adolc -e -i Recruitment_startingValue.txt

@@ -1,0 +1,44 @@
+# CREATED  20 Jul 2018
+# MODIFIED 20 Jul 2018
+
+## Estimation script for SIMDATA model
+
+#############
+## Estimation
+#############
+#@minimiser beta_diff
+#type betadiff
+#evaluations 4000
+#iterations 1000
+#tolerance 1e-6
+@minimiser ADOLC
+type adolc
+step_size 1e-6
+iterations 2500
+evaluations 4000
+tolerance 1e-6
+
+#############
+## Estimates
+#############
+## recruitment r0
+@estimate r0
+type uniform
+parameter process[Recruitment].r0
+lower_bound 1e3
+upper_bound 5e8
+
+#@estimate M
+#type uniform
+#parameter process[instantaneous_mortality].m
+#lower_bound 0.04
+#upper_bound 0.4
+
+###########
+## Profile 
+###########
+@profile r0
+parameter process[Recruitment].r0
+steps 10
+lower_bound 100
+upper_bound 10000

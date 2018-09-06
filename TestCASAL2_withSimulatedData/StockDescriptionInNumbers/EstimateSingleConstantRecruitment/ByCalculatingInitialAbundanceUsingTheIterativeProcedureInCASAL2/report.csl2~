@@ -1,0 +1,45 @@
+## Report section for now
+
+## print the partition
+#@report Init
+#type initialisation_partition
+
+## print the partition
+#@report partitions
+#type partition_mean_weight
+#time_step Jan-Dec
+#years 1970:1990
+
+@report annual_age_1st4Months
+type partition
+time_step January-April
+years 1970:1990
+
+@report annual_age_2nd4Months
+type partition
+time_step May-August
+years 1970:1990
+
+@report annual_age_3rd4Months
+type partition
+time_step September-December
+years 1970:1990
+
+@report objective
+type objective_function
+
+#@report Mortality
+#type process
+#process instantaneous_mortality
+
+@report obs
+type observation
+observation SimulatedBiomass
+
+@report obs_agefreq
+type observation
+observation some_species_agefreq
+
+## Print estimate values
+@report summary
+type estimate_value
