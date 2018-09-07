@@ -1,5 +1,5 @@
 ## CREATED  23 Jul 2018
-## MODIFIED  3 Sep 2018
+## MODIFIED  7 Sep 2018
 
 ## an age-structured model
 @model
@@ -19,7 +19,7 @@ categories some_species
 min_age 1
 max_age 12 
 table n
-some_species 0 892224.1 598075.7 400902.1 268732.7 180136.9 120749.4 80940.75 54256.21 36369.02 24378.88 16341.66
+some_species 0 3951705 2648907 1775615 1190231 797835.5 534805.1 358490.6 240303.4 161080.2 107975.3 72378
 
 @categories
 format Stock
@@ -39,7 +39,7 @@ processes NaturalMortality Ageing
 type recruitment_constant
 categories some_species
 proportions 1
-r0 1331042 ## R0 is numbers, you could also specify B0
+r0 5895251 ## R0 is numbers, you could also specify B0
 age 1
 
 @process Ageing
@@ -56,7 +56,7 @@ m 0.2
 type mortality_event
 categories some_species
 years   1970:1989
-catches 1930573 609244.1 1357435 441520.1 939787.3 491722.4 608607.4 1422055 1055910 891368.1 284791.9 637250.3 1185877 522617.8 1322404 640768.9 581145.9 501685.5 1038677 1267169
+catches 7938585 3877932 3407655 3813961 2212091 3706921 2285490 4111243 4484543 5543175 3896396 3393653 2129156 2295894 5097609 2693742 5466979 2400055 5013567 2293663
 U_max 0.9
 selectivities One
 
