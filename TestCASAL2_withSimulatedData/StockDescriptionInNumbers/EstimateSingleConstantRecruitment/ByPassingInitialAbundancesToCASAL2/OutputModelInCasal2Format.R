@@ -1,12 +1,12 @@
 # CREATED  23 May 2018
-# MODIFIED  3 Sep 2018
+# MODIFIED  7 Sep 2018
 
 # PURPOSE create the input for CASAL2 that describes the population structure
 
 filename = "./myfirstmodel.csl2"
 
 cat(file = filename, "## CREATED  23 Jul 2018\n")
-cat(file = filename, "## MODIFIED  3 Sep 2018\n", append = TRUE)
+cat(file = filename, "## MODIFIED  7 Sep 2018\n", append = TRUE)
 
 cat(file = filename, "\n", append = TRUE)
 
@@ -66,7 +66,7 @@ cat(file = filename, "@process Recruitment\n", append = TRUE)
 cat(file = filename, "type recruitment_constant\n", append = TRUE)
 cat(file = filename, "categories some_species\n", append = TRUE)
 cat(file = filename, "proportions 1\n", append = TRUE)
-cat(file = filename, paste("r0", sim.rec, "## R0 is numbers, you could also specify B0\n"), append = TRUE)
+cat(file = filename, paste("r0", param["Simulated.recruitment"], "## R0 is numbers, you could also specify B0\n"), append = TRUE)
 cat(file = filename, "age 1\n", append = TRUE)
 
 cat(file = filename, "\n", append = TRUE)
@@ -76,16 +76,6 @@ cat(file = filename, "type ageing\n", append = TRUE)
 cat(file = filename, "categories some_species\n", append = TRUE)
 
 cat(file = filename, "\n", append = TRUE)
-
-### here we will output yields
-vbgf <- function(t, Linf, k, t0) Linf * (1 - exp(-k*(t-t0)))
-par <- c(100, 0.5, 0)
-length.at.age <- vbgf(seq(1,max.age), Linf = par[1], k = par[2], t0 = par[3])
-
-# Length-Weight relationship
-#par <- c(par, 1e-6, 3)
-#weight.at.age <- par[4] * length.at.age ^ par[5] # in kilograms
-#yield <- rowSums(sim$catch * outer(rep(1, dim(sim$catch)[1]),weight.at.age))
 
 cat(file = filename, "@process NaturalMortality\n", append = TRUE)
 cat(file = filename, "type mortality_constant_rate\n", append = TRUE)

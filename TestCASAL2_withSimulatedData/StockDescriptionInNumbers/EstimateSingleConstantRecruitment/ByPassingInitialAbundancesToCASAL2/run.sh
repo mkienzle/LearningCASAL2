@@ -16,7 +16,6 @@ else
 	touch $file;
 fi
 
-
 # Loop over x times simulation and estimation process
 for i in `seq 1 100`; do
 # Simulated data, generate CASAL2 input files
