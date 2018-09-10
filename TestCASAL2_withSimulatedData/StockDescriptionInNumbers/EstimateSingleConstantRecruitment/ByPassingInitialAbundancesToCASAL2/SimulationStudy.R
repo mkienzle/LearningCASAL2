@@ -26,6 +26,9 @@ cat(paste(as.numeric(param["Simulated.recruitment"]), ",", sep=""))
 
 sim <-  Simulate.pulsefishing.Fishery(max.age = max.age,  nb.of.preExploitation.years = nb.of.preexploitation.years, nb.of.exploitation.years = nb.of.years.of.fishing, exploitation.rate = c(0.2, 0.8), nat.mort.range = c(0.4, 0.4), recruitment.range=c(param["Simulated.recruitment"], param["Simulated.recruitment"]), verbose = FALSE)
 
+# Plot simulated dynamics of population
+source("PlotDynamic.R")
+
 # Output synthetic data into a CASAL2 model
 source("OutputModelInCasal2Format.R")
 source("OutputObservationsInCasal2Format.R")
