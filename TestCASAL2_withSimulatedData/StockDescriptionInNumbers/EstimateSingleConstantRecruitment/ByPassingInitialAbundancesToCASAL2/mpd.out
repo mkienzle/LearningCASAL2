@@ -1,7 +1,7 @@
 * MPD
 estimate_values:
 process[Recruitment].r0 
-8.67661e+06 
+4.04965e+06 
 covariance_matrix:
-800.522 
+38635.9 
 *end

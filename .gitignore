@@ -1,5 +1,12 @@
 Todo.list
 *.~
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
 /TestCASAL2_withSimulatedData/dev
 /TestCASAL2_withSimulatedData/dev2
 Obsolete/
