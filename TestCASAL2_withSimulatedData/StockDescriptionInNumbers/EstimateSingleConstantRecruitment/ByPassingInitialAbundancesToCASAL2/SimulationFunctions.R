@@ -108,4 +108,42 @@ return(list(preExploitationPop = list(
 }
 
 
+#### A set of functions to estimate recruitment
+
+# Calculate the number of fish in the population
+
+# INPUT:
+#       Rec: a single number (Here we assume recruitment is constant)
+#       catch: a vector of the number of fish caught each year
+estimated.nb.in.pop <- function(Rec = NA, catch = NA, prop.catch.at.age = NA, Nat.Mort = NA, InitialAbundance = NA){
+
+# The matrix of the population
+pop.at.the.beginning.of.the.year <- matrix(ncol = ncol(prop.catch.at.age), nrow = nrow(prop.at.age))
+pop.after1stNatMort <- matrix(ncol = ncol(prop.catch.at.age), nrow = nrow(prop.at.age))
+pop.afterCatch <- matrix(ncol = ncol(prop.catch.at.age), nrow = nrow(prop.at.age))
+pop.after2ndNatMort <- matrix(ncol = ncol(prop.catch.at.age), nrow = nrow(prop.at.age))
+
+# Catch at age is
+catch.at.age <- prop.catch.at.age * outer(catch, rep(1,ncol(prop.catch.at.age)))
+
+# Initialise the population
+pop.at.the.beginning.of.the.year[1,] <- c(Rec, InitialAbundance[-1])
+
+### The population dynamics
+for(year in 1:nrow(catch.at.age)){
+
+pop.after1stNatMort[year,] <-  pop.at.the.beginning.of.the.year[year,] * exp(- Nat.Mort/2)
+pop.afterCatch[year,] <-  pop.after1stNatMort[year,] - catch.at.age[year,]
+pop.after2ndNatMort[year,] <-  pop.afterCatch[year,] * exp(- Nat.Mort/2)
+
+# Aging process
+if( year < nrow(catch.at.age)) pop.at.the.beginning.of.the.year[year+1,] <- c(Rec, pop.after2ndNatMort[year,-ncol(catch.at.age)])
+}
+
+
+return(list("pop.at.the.beginning.of.the.year" = pop.at.the.beginning.of.the.year, "pop.after1stNatMort" = pop.after1stNatMort,
+            "pop.afterCatch" = pop.afterCatch, "pop.after2ndNatMort" = pop.after2ndNatMort))
+}
+
+
 

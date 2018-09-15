@@ -89,3 +89,6 @@ est.rec <- rowSums(Caaa2Coaa(sim$DuringExploitationPop$catch), na.rm = T) / rowS
 # Ouput the average estimate of recruitment
 cat(paste(round(mean(est.rec[seq(length(est.rec)-nb.of.years.of.fishing+1, length(est.rec))]),0), ",", sep=""))
 
+## What is the estimate using R (and simply a regression to the survey)
+source("EstimateRecruitmentInR.R")
+cat(paste(round(Roptimize.res$minimum,0), ",", sep=""))
