@@ -78,12 +78,12 @@
 
 \usepackage{graphicx} % Allows including images
 \usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
-
+\usepackage{tabularx} % Allows for (middle) vertical centring of the content of table cells
 %----------------------------------------------------------------------------------------
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[Short title]{8 weeks with CASAL2} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[]{8 weeks with CASAL2} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 %\author{Marco Kienzle} % Your name
 %\institute[UCLA] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -113,6 +113,99 @@
 %% \section{First Section} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
 %% %------------------------------------------------
 
+
+%% %------------------------------------------------
+
+\begin{frame}
+\frametitle{What is CASAL2?}
+\begin{itemize}
+\item a C++ software to represent the dynamics of a fishery
+\item the dynamics of the fish population is deterministic
+\item CASAL2 implements discrete models: it does not have a concept of continuous times (natural mortality are not rates)
+\item models are not fitted to catch: catch is an input to the model
+\item fishing effort is not used to estimate fishing mortality, instead it uses exploitation rates (U=log(1-F))
+\item models can be fitted to abundance surveys, age-frequencies, and more (tagging data, etc..)
+\end{itemize}
+\end{frame}
+
+%% %------------------------------------------------
+
+%\begin{frame}
+%\frametitle{An approach to learning CASAL2}
+%Simulating the dynamics of a fishery and feeding CASAL2 with synthetic data, help us:
+
+%\begin{itemize}
+%\item understanding how to use CASAL2 to get the correct parameter estimate
+%\item learn about the limitations of CASAL2
+%\end{itemize}
+
+%\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{An approach to learning CASAL2}
+
+\begin{figure}
+  \includegraphics[scale=0.8, angle=0]{diagram.eps}
+  \end{figure}
+
+\end{frame}
+
+%% %------------------------------------------------
+
+\begin{frame}
+\frametitle{Simulated fishery}
+
+\begin{itemize}
+\item Single species, single area
+\item age-structured, multiple years
+\item number of individuals (no somatic growth)
+\item constant: natural mortality, recruitment, selectivity (= 1)
+\item varying exploitation rate ($0 \leq U \leq 1$)
+\end{itemize}
+
+\end{frame}
+
+%% %------------------------------------------------
+
+\begin{frame}
+\frametitle{Synthetic data and parameters passed to CASAL2}
+
+\begin{itemize}
+\item catch
+\item age frequency distributions
+\item abundance survey
+\item natural mortality
+\item selectivity
+\item initial population abundance [sometimes]
+\item model structure (timing of the removals, the fraction of natural mortality before remove, etc...) [sometimes]
+\end{itemize}
+
+The only thing we are asking to estimate (for the moment) is a single parameter (a constant recruitment): can we estimate that using CASAL2?
+
+\end{frame}
+
+%% %------------------------------------------------
+
+
+%% %------------------------------------------------
+
+\begin{frame}
+\frametitle{Some results}
+
+\begin{table}
+  \tiny
+\begin{tabular}{|m{4cm}|m{1cm}|m{1cm}|m{4cm}|}
+\hline
+                & \multicolumn{2}{|c|}{\bf Estimate}                       &          \\ 
+  {\bf Simulate}      & {\bf recruitment}          & {\bf Initial conditions} & {\bf Comments} \\ \hline
+  Baranov Eq.   & not OK               & not OK                      & you can't implement a Baranov eq. in CASAL2, you need to model a pulse fishery \\ \hline
+  Pulse removal & OK                   & not OK                      & CASAL2 assumes un-exploited stock before the start of the data time series \\ \hline
+  Pulse removal and virgin stock pre-exploitation & OK & OK          & Finally a CASAL2 model working! I can estimate a single parameter with CASAL2!\\ \hline
+\end{tabular}
+\end{table}
+\end{frame}
+
 %% \subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 
 \begin{frame}
@@ -126,6 +219,31 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
+  \frametitle{Similarity between pulse removal and Baranov}
+
+  We can write that the number at the end of a year is:
+  \begin{equation}
+    (N_{0} \times e^{-\frac{M}{2}} - N_{c}) \times e^{-\frac{M}{2}}
+    \end{equation}
+
+  Since $N_{c} = U \times N_{0} \times e^{-\frac{M}{2}}$, we can rewrite
+   \begin{equation}
+    N_{0} \times e^{-\frac{M}{2}} (1-U) \times e^{-\frac{M}{2}}
+    \end{equation}
+
+   And look at this as
+     \begin{equation}
+    N_{0} \times e^{-\frac{M}{2}} \times e^{-F} \times e^{-\frac{M}{2}}
+     \end{equation}
+
+     So $1-U = e^{-F}$ (Walters and Hilborn, 1992: p.352)
+ 
+  
+  \end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
 \frametitle{Using CASAL2 to estimate constant recruitment}
 
 \begin{figure}
@@ -134,18 +252,35 @@
 
 \end{frame}
 
-%% %------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Using CASAL2 to estimate constant recruitment}
 
-%% \begin{frame}
-%% \frametitle{Bullet Points}
-%% \begin{itemize}
-%% \item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-%% \item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-%% \item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-%% \item Nam cursus est eget velit posuere pellentesque
-%% \item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
-%% \end{itemize}
-%% \end{frame}
+\begin{figure}
+  \includegraphics[scale=0.38, angle=-90]{../../TestCASAL2_withSimulatedData/StockDescriptionInNumbers/EstimateSingleConstantRecruitment/ByPassingInitialAbundancesToCASAL2/Results/Graphics/SimVsEst2.ps}
+  \end{figure}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Conclusions}
+
+\begin{itemize}
+\item CASAL2 doesn't have (yet) the flexibility to implement any model we want (Baranov equation, delay-difference, survival analysis, etc....)
+\item being able to implement only pulse removal fishery is fairly narrow in scope and assuming that a fishery was un-exploited before the start of the data time series is even more limiting
+\item we have to do more work to understand why it is failing (in approx 6-10\% of the cases) to converge to the correct recruitment value
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{}
+
+Thanks for your attention
+
+\end{frame}
 
 %% %------------------------------------------------
 
