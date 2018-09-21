@@ -1,4 +1,5 @@
-
+# CREATED  15 Aug 2018
+# MODIFIED 21 Sep 2018
 # Read matrices at age from CASAL2 reports
 
 ReadYearCrossAgeMat <- function(Identifier = '', ReportFileName = '/tmp/tmp.txt'){
@@ -6,9 +7,9 @@ ReadYearCrossAgeMat <- function(Identifier = '', ReportFileName = '/tmp/tmp.txt'
 # Which line does the Identifier appears at
 line.start <- grep(Identifier ,readLines(ReportFileName), fixed = TRUE)
 
-tmp.mat <- matrix(scan(ReportFileName, skip = line.start + 2, nlines = nb.of.years.of.fishing), ncol = max.age + 1, byrow=T)
+tmp.mat <- matrix(scan(ReportFileName, skip = line.start + 3, nlines = nb.of.years.of.fishing), ncol = max.age + 1, byrow=T)
 data.tab <- as.data.frame(tmp.mat[,-1]);
-dimnames(data.tab)[[1]] <- tmp.mat[,1]; dimnames(data.tab)[[2]] <- scan("/tmp/output.txt", what = "character", skip = line.start + 1, nlines =1)
+dimnames(data.tab)[[1]] <- tmp.mat[,1]; dimnames(data.tab)[[2]] <- scan(ReportFileName, what = "character", skip = line.start + 2, nlines =1)[-1]
 
 return(data.tab)
 }
