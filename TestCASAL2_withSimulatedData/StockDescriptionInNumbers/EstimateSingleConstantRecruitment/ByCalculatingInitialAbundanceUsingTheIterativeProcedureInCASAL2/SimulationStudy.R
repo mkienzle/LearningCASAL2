@@ -1,5 +1,5 @@
 # CREATED  13 November 2014 (approach originally written for survival analysis)
-# MODIFIED 14 August 2018
+# MODIFIED 24 Sep 2018
 
 # PURPOSE simulate a pulse fishery (i.e. catches taken instantaneously)
 #         in order to test CASAL2
@@ -37,8 +37,13 @@ counter <- counter + 1
 }
 
 # Output a model in CASAL2 format
-source("OutputModelInCasalFormat.R")
-source("OutputObservationsInCasalFormat.R")
+
+# **** WARNING **** : REPLACED THIS
+#source("OutputModelInCasalFormat.R")
+#source("OutputObservationsInCasalFormat.R")
+# BY
+source(paste(ProjDir, "StockDescriptionInNumbers/EstimateSingleConstantRecruitment", "Rlibrary", "OutputModelInCasal2Format.R", sep = "/"))
+source(paste(ProjDir, "StockDescriptionInNumbers/EstimateSingleConstantRecruitment", "Rlibrary", "OutputObservationsInCasal2Format.R", sep = "/"))
 
 # Estimates with survival analysis
 # note that the exploitation rate is converted into fishing mortality using the relation U = 1 - exp(-F) because taking a proportion U of the population is the same than saying 1 - exp(-F) died; U = 1 - exp(-F) <=> F = -log(1-U)

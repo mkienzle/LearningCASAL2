@@ -1,8 +1,11 @@
 # CREATED   1 Aug 2018
-# MODIFIED  7 Sep 2018
+# MODIFIED 24 Sep 2018
 
 # PURPOSE simulate a pulse fishery (i.e. catches taken instantaneously)
 #         in order to test CASAL2
+
+# Project path
+ProjDir = "/home/mkienzle/mystuff/Work/NIWA/LearningCASAL2/TestCASAL2_withSimulatedData"
 
 # Useful functions
 source("SimulationFunctions.R")
@@ -30,8 +33,8 @@ sim <-  Simulate.pulsefishing.Fishery(max.age = max.age,  nb.of.preExploitation.
 source("PlotDynamic.R")
 
 # Output synthetic data into a CASAL2 model
-source("OutputModelInCasal2Format.R")
-source("OutputObservationsInCasal2Format.R")
+source(paste(ProjDir, "StockDescriptionInNumbers/EstimateSingleConstantRecruitment", "Rlibrary", "OutputModelInCasal2Format.R", sep = "/"))
+source(paste(ProjDir, "StockDescriptionInNumbers/EstimateSingleConstantRecruitment", "Rlibrary", "OutputObservationsInCasal2Format.R", sep = "/"))
 
 ############
 # run CASAL2
