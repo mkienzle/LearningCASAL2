@@ -1,5 +1,0 @@
-## Pick up any other files we want to include
-!include "myfirstmodel.csl2"
-!include "estimation.csl2"
-!include "observations.csl2"
-!include "report.csl2"

@@ -1,2 +1,0 @@
-process[Recruitment].r0
-1500000.0
