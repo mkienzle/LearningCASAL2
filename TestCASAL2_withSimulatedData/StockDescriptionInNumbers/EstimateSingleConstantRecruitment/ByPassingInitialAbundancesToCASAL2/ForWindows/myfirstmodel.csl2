@@ -1,0 +1,67 @@
+## CREATED  23 Jul 2018
+## MODIFIED 12 Oct 2018 
+
+## an age-structured model
+
+@model
+type age
+min_age 1
+max_age 12 
+age_plus false
+start_year 1970
+final_year 1989 
+base_weight_units kgs
+time_steps January-April May-August September-December
+initialisation_phases Fixed
+
+@initialisation_phase Fixed
+type state_category_by_age
+categories some_species
+min_age 1
+max_age 12 
+table n
+some_species 0 4328198 2901278 1944785 1303628 873848 585757.8 392645.2 263198 176426.9 118262.5 79273.7
+
+@categories
+format Stock
+names some_species
+
+
+# Sequence of processes affecting the stock annually
+@time_step January-April
+processes Recruitment NaturalMortality
+@time_step May-August
+processes Fishery
+@time_step September-December
+processes NaturalMortality Ageing
+
+## Recruitment
+@process Recruitment
+type recruitment_constant
+categories some_species
+proportions 1
+r0 6456912 ## R0 is numbers, you could also specify B0
+age 1
+
+@process Ageing
+type ageing
+categories some_species
+
+@process NaturalMortality
+type mortality_constant_rate
+categories some_species
+selectivities One
+m 0.2
+
+@process Fishery
+type mortality_event
+categories some_species
+years   1970:1989
+catches 6827659 5620011 6474865 2724803 3734210 3935552 2165710 3642845 3234986 4635358 3543382 2530440 3807597 2670321 4506237 3312406 3588227 5971467 3893537 4899752
+U_max 0.9
+selectivities One
+
+@selectivity One
+type constant
+c 1
+
