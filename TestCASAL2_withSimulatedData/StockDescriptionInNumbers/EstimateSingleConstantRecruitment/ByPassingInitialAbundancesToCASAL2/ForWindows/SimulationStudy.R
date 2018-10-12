@@ -50,7 +50,7 @@ cat(paste(round(Roptimize.res$minimum,0), ",", sep=""), file = "Results/SimVsEst
 ########################################################################
 # Estimate the parameter with CASAL2
 ########################################################################
-system2(command = "casal2", args = "-e -i Recruitment_startingValue.txt", stdout = "tmpfile.txt")
+system2(command = "casal2", args = "-e -i Recruitment_startingValue.txt", stdout = "tmpfile.txt", stderr = "outerr.txt")
 casal2.est <- as.numeric(readLines("tmpfile.txt")[grep('estimate_value', readLines("tmpfile.txt"))+3])
 cat(paste(casal2.est, "\n", sep=""), file = "Results/SimVsEst.csv", append = TRUE)
 
